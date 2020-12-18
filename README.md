@@ -1,0 +1,2 @@
+# magyarch-xmonad
+Xmonad
