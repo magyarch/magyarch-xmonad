@@ -1,0 +1,115 @@
+Config {
+
+   -- appearance
+     font =         "xft:Font Awesome:size=12, JetBrains Mono:size=11:bold:antialias=true"
+   , additionalFonts = [ "xft:Joy Pixels:size=11"
+                          -- , "xft:Mononoki Nerd Font:pixelsize=16:antialias=true:hinting=true"
+                          -- , "xft:FontAwesome:pixelsize=13"
+                           ]
+  
+   , bgColor =      "#2f2b26"
+   , fgColor =      "#c3cdc8"
+   , position =     Top
+   --, border =       BottomB
+   --, borderColor =  "#2e8b57"
+
+   -- layout
+   , sepChar =  "%"   -- delineator between plugin names and straight text
+   , alignSep = "}{"  -- separator between left-right alignment
+   , template = " %UnsafeStdinReader% }{ %multicpu% | %coretemp% | %memory% | %dynnetwork% | %LHBP% | %date% | %kbd% "
+
+   -- general behavior
+   , lowerOnStart =     True    -- send to bottom of window stack on start
+   , hideOnStart =      False   -- start with window unmapped (hidden)
+   , allDesktops =      True    -- show on all desktops
+   , overrideRedirect = True    -- set the Override Redirect flag (Xlib)
+   , pickBroadest =     False   -- choose widest display (multi-monitor)
+   , persistent =       True    -- enable/disable hiding (True = disabled)
+
+   -- plugins
+   --   Numbers can be automatically colored according to their value. xmobar
+   --   decides color based on a three-tier/two-cutoff system, controlled by
+   --   command options:
+   --     --Low sets the low cutoff
+   --     --High sets the high cutoff
+   --
+   --     --low sets the color below --Low cutoff
+   --     --normal sets the color between --Low and --High cutoffs
+   --     --High sets the color above --High cutoff
+   --
+   --   The --template option controls how the plugin is displayed. Text
+   --   color can be set by enclosing in <fc></fc> tags. For more details
+   --   see http://projects.haskell.org/xmobar/#system-monitor-plugins.
+   , commands =
+
+        -- weather monitor
+        [ Run Weather "LHBP" [ "--template", "<skyCondition> |  <fc=#c3cdc8><tempC></fc>°C |  <fc=#c3cdc8><rh></fc>% "
+                             ] 36000
+
+        -- Stdinreadeer
+	 --, Run StdinReader
+   , Run UnsafeStdinReader
+
+        -- network activity monitor (dynamic interface resolution)
+        , Run DynNetwork     [ "--template" , "   <dev>:  <tx>kB/s| <rx>kB/s "
+                             , "--Low"      , "1000"       -- units: B/s
+                             , "--High"     , "5000"       -- units: B/s
+                             , "--low"      , "#c3cdc8"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkred"
+                             ] 10
+
+        -- cpu activity monitor
+        , Run MultiCpu       [ "--template" , "  <total0>% "
+                             , "--Low"      , "50"         -- units: %
+                             , "--High"     , "85"         -- units: %
+                             , "--low"      , "#c3cdc8"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkred"
+                             ] 10
+
+        -- cpu core temperature monitor
+        , Run CoreTemp       [ "--template" , "  <core0>°C "
+                             , "--Low"      , "70"        -- units: °C
+                             , "--High"     , "80"        -- units: °C
+                             , "--low"      , "#c3cdc8"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkred"
+                             ] 50
+
+        -- memory usage monitor
+        , Run Memory         [ "--template" ,"  <usedratio>% "
+                             , "--Low"      , "20"        -- units: %
+                             , "--High"     , "90"        -- units: %
+                             , "--low"      , "#c3cdc8"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkred"
+                             ] 10
+
+        -- battery monitor
+        , Run Battery        [ "--template" , "Batt: <acstatus>"
+                             , "--Low"      , "10"        -- units: %
+                             , "--High"     , "80"        -- units: %
+                             , "--low"      , "darkred"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkgreen"
+
+                             , "--" -- battery specific options
+                                       -- discharging status
+                                       , "-o"	, "<left>% (<timeleft>)"
+                                       -- AC "on" status
+                                       , "-O"	, "<fc=#dAA520>Charging</fc>"
+                                       -- charged status
+                                       , "-i"	, "<fc=#006000>Charged</fc>"
+                             ] 50
+
+        -- time and date indicator
+        --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
+        , Run Date           "  <fc=#c3cdc8>%F (%a) %T</fc>" "date" 10
+
+        -- keyboard layout indicator
+        , Run Kbd            [ ("hu"         , "<fc=#c3cdc8>hu</fc>")
+        --                     , ("us"         , "<fc=#8B0000>US</fc>")
+                             ]
+        ]
+   }
