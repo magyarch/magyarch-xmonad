@@ -12,7 +12,7 @@ case $BLOCK_BUTTON in
 	2) pamixer -t ;;
 	4) pamixer --allow-boost -i 1 ;;
 	5) pamixer --allow-boost -d 1 ;;
-	3) notify-send "📢 Volume module" "\- Shows volume 🔊, 🔇 if muted.
+	3) notify-send "📢 Volume module" "\- Shows volume ,  if muted.
 - Middle click to mute.
 - Scroll to change." ;;
 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
@@ -21,18 +21,18 @@ esac
 volstat="$(pactl list sinks)"
 # volstat="$(amixer get Master)" # ALSA only equivalent.
 
-echo "$volstat" | grep -q "Mute: yes" && printf "🔇\\n" && exit
-# echo "$volstat" | grep "\[off\]" >/dev/null && printf "🔇\\n" && exit # ALSA
+echo "$volstat" | grep -q "Mute: yes" && printf "\\n" && exit
+# echo "$volstat" | grep "\[off\]" >/dev/null && printf "\\n" && exit # ALSA
 
 vol="$(echo "$volstat" | grep '[0-9]\+%' | sed "s,.* \([0-9]\+\)%.*,\1,;1q")"
 # vol=$(echo "$volstat" | grep -o "\[[0-9]\+%\]" | sed "s/[^0-9]*//g;1q") # ALSA
 
 if [ "$vol" -gt "70" ]; then
-	icon="🔊"
+	icon=""
 elif [ "$vol" -lt "30" ]; then
-	icon="🔈"
+	icon=""
 else
-	icon="🔉"
+	icon=""
 fi
 
-printf "%s%s%%\\n" "$icon" "$vol"
+printf "%s%s%%\\n" "$icon " " $vol"
