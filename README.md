@@ -1,6 +1,6 @@
 # magyarch-xmonad
 Xmonad
-xmonad is a dynamically tiling X11 window manager that is written and configured in Haskell. In a normal WM, you spend half your time aligning and searching for windows. xmonad makes work easier, by automating this.
+is a dynamically tiling X11 window manager that is written and configured in Haskell. In a normal WM, you spend half your time aligning and searching for windows. xmonad makes work easier, by automating this.
 
 Why should I use xmonad?
 xmonad is tiling.
