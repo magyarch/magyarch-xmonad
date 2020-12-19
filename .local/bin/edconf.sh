@@ -7,11 +7,11 @@
 
 declare options=("alias
 bash
-bspwm
 profile
 vifm
-polybar
 sxhkd
+xmonad
+xmobarrc
 xprofile
 quit")
 
@@ -27,8 +27,8 @@ case "$choice" in
 	bash)
 		choice="$HOME/.bashrc"
 	;;
-	bspwm)
-		choice="$HOME/.config/bspwm/bspwmrc"
+	xmonad)
+		choice="$HOME/.xmonad/xmonad.hs"
 	;;
 	profile)
 		choice="$HOME/.profile"
@@ -36,8 +36,8 @@ case "$choice" in
 	vifm)
 		choice="$HOME/.config/vifm/vifmrc"
 	;;
-	polybar)
-		choice="$HOME/.config/polybar/config"
+	xmobarrc)
+		choice="$HOME/.xmobarrc"
 	;;
 	sxhkd)
 		choice="$HOME/.config/sxhkd/sxhkdrc"

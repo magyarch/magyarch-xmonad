@@ -74,7 +74,7 @@ super + F8
 
 # Take and pick screenshot
 super + {F4,F5}
-    {maim pic-full-$(date '+%y%m%d-%H%M-%S').png,maimpick}
+    {maim ~/Képek/Képernyőképek/`date +%Y-%m-%d_%H:%M:%S`.png,maimpick}
 
 # Mount and umount a USB drive or Android device
 super + {F9,F10}
@@ -82,7 +82,7 @@ super + {F9,F10}
 
 # Mpv floating
 super + F12
-    mpv --geometry=40%+30+30 --title="mpvfloat"
+    mpv --geometry=20%+30+30 --title="mpvfloat" /dev/video0
 
 ###########################################
         # Volume Control
