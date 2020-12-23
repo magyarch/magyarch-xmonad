@@ -10,7 +10,7 @@ Config {
    , bgColor =      "#2f2b26"
    , fgColor =      "#c3cdc8"
    , position =     TopSize L 97 24
-   , alpha    = 127
+   , alpha    = 255
    --, overrideRedirect = True 
    --, border =       BottomB
    --, borderColor =  "#2e8b57"
@@ -18,7 +18,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = " %UnsafeStdinReader% }{ %multicpu% | %coretemp% | %memory% | %dynnetwork% | %LHBP% | %date% | %myvolume% | %kbd% "
+   , template = " %UnsafeStdinReader% }{ %mpd% | %multicpu% | %coretemp% | %memory% | %dynnetwork% | %LHBP% | %date% | %myvolume% | %kbd% "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -53,7 +53,7 @@ Config {
    , Run UnsafeStdinReader
 
         -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "--template" , "   <dev>:  <tx>kB/s| <rx>kB/s "
+        , Run DynNetwork     [ "--template" , "    <tx>kB/s| <rx>kB/s "
                              , "--Low"      , "1000"       -- units: B/s
                              , "--High"     , "5000"       -- units: B/s
                              , "--low"      , "#c3cdc8"
@@ -112,14 +112,14 @@ Config {
 
         ,Run Com "/bin/bash" ["-c", "~/.local/bin/statusbar/volume"]  "myvolume" 5
 
+        , Run MPD ["-t", "<state>: <artist> - <track>"] 10
+
 
         -- time and date indicator
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
         , Run Date           "  <fc=#c3cdc8>%F (%a) %T</fc>" "date" 10
 
         -- keyboard layout indicator
-        , Run Kbd            [ ("hu"         , "<fc=#c3cdc8>hu</fc>")
-        --                     , ("us"         , "<fc=#8B0000>US</fc>")
-                             ]
+        , Run Kbd            [ ("hu"         , "<fc=#c3cdc8>hu</fc>") ]
         ]
    }

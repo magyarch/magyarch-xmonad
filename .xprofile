@@ -11,6 +11,7 @@ mpdupdate &
 #(sleep 1s && ~/.config/polybar/launch.sh) &
 #conky &
 nm-applet &
+urxvtd -q -o -f &
 #picom -cCGfF -o 0.38 -O 200 -I 200 -t 0 -l 0 -r 3 -D2 -m 0.88 &
 #blueberry-tray &
 #xrandr --output LVDS1 --mode 1366x768 --output HDMI1 --mode 1920x1080 --right-of LVDS1 &
@@ -19,8 +20,9 @@ xwallpaper --no-randr /usr/share/backgrounds/magyarch/wallpaper.png &
 #zathura ~/.local/bin/Magyarch-bspwm.pdf &
 trayer --edge top --align right \
     --SetDockType true --SetPartialStrut true --expand true \
-    --width 3 --height 23 \
-    --alpha 127 \
+    --width 3 --height 24 \
+    --transparent true \
+    --alpha 0 \
     --tint 0x2f2b26 &
 
 
