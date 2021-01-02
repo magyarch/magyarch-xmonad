@@ -18,13 +18,9 @@ super + {_,shift + } e
 super + {_,shift + } n
     {$TERMINAL -e newsboat, $TERMFLOAT -g 110x30 -e ncmpcpp}
 
-# Htop,gtop system monitor
-super + {_,shift + } i
-    {$TERMINAL -e htop, $TERMINAL -e gtop}
-
 # S,R,lock script,calendar app
 super + {_,shift + } c
-    {power, $TERMFLOAT -g 70x20-16+30 -e calcurse}
+    {power, $TERMFLOAT -g 90x30+60+30 -e calcurse}
 
 # Default web browser brave and firefox
 super + {_,shift + } w
@@ -95,3 +91,6 @@ alt + {Up,Down}
 # Mute volume
 F12
    amixer set Master toggle
+
+F1
+  xfce4-terminal --drop-down -e htop

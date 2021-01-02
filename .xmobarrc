@@ -2,23 +2,22 @@ Config {
 
    -- appearance
      font =         "xft:Font Awesome:size=12, JetBrains Mono:size=11:bold:antialias=true"
-   , additionalFonts = [ "xft:Joy Pixels:size=11"
-                          -- , "xft:Mononoki Nerd Font:pixelsize=16:antialias=true:hinting=true"
-                          -- , "xft:FontAwesome:pixelsize=13"
-                           ]
+   , additionalFonts = ["Joy Pixels:size=11"]
 
    , bgColor =      "#2f2b26"
    , fgColor =      "#c3cdc8"
-   , position =     TopSize L 97 24
+   , position =     TopSize L 97 23
+   --, position = Static { xpos = 0, ypos = 0, width = 1920, height = 23 },
    , alpha    = 255
    --, overrideRedirect = True 
    --, border =       BottomB
    --, borderColor =  "#2e8b57"
+     , iconRoot = "/home/xeoncpu/.xmonad/xpm/"  -- default: "."
 
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = " %UnsafeStdinReader% }{ %mpd% | %multicpu% | %coretemp% | %memory% | %dynnetwork% | %LHBP% | %date% | %myvolume% | %kbd% "
+   , template = " <box type=Bottom width=2 color=#c3cdc8> <icon=xmonad.xpm/>  %UnsafeStdinReader% </box> }{  <fc=#2f2b26,#11aabb> <fn=0></fn> %mycpu% </fc><fc=#2f2b26,#0876ee> %mymemory% </fc><fc=#2f2b26,#ef9cbb>%LHBP%</fc><action=`urxvt -e calcurse` button=1>%date%</action><fc=#2f2b26,#2e8b57> %myvolume% | %kbd%  </fc>"
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -28,41 +27,20 @@ Config {
    , pickBroadest =     False   -- choose widest display (multi-monitor)
    , persistent =       True    -- enable/disable hiding (True = disabled)
 
-   -- plugins
-   --   Numbers can be automatically colored according to their value. xmobar
-   --   decides color based on a three-tier/two-cutoff system, controlled by
-   --   command options:
-   --     --Low sets the low cutoff
-   --     --High sets the high cutoff
-   --
-   --     --low sets the color below --Low cutoff
-   --     --normal sets the color between --Low and --High cutoffs
-   --     --High sets the color above --High cutoff
-   --
-   --   The --template option controls how the plugin is displayed. Text
-   --   color can be set by enclosing in <fc></fc> tags. For more details
-   --   see http://projects.haskell.org/xmobar/#system-monitor-plugins.
-   , commands =
-
+   , commands = 
+          
         -- weather monitor
-        [ Run Weather "LHBP" [ "--template", "<skyCondition> |  <fc=#c3cdc8><tempC></fc>°C |  <fc=#c3cdc8><rh></fc>% "
-                             ] 36000
-
+        [Run Weather "LHBP" [ "-t", " <fn=0></fn>  <tempC>°C / <fn=0></fn> <rh>% "] 36000
+        , Run MPD ["-t", "<state>: <artist> - <track>"] 10
         -- Stdinreadeer
-	 --, Run StdinReader
-   , Run UnsafeStdinReader
+	    --, Run StdinReader
+        , Run UnsafeStdinReader
 
         -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "--template" , "    <tx>kB/s| <rx>kB/s "
-                             , "--Low"      , "1000"       -- units: B/s
-                             , "--High"     , "5000"       -- units: B/s
-                             , "--low"      , "#c3cdc8"
-                             , "--normal"   , "darkorange"
-                             , "--high"     , "darkred"
-                             ] 10
-
+        -- , Run DynNetwork ["-t","<rx> | <tx>","-S","True","-L","0","-H","6000","--normal","green","--high","red"] 10
+        -- , Run Uptime [] 600
         -- cpu activity monitor
-        , Run MultiCpu       [ "--template" , "  <total0>% "
+        , Run MultiCpu       [ "--template" , "   <total> % "
                              , "--Low"      , "50"         -- units: %
                              , "--High"     , "85"         -- units: %
                              , "--low"      , "#c3cdc8"
@@ -71,55 +49,55 @@ Config {
                              ] 10
 
         -- cpu core temperature monitor
-        , Run CoreTemp       [ "--template" , "  <core0>°C "
-                             , "--Low"      , "70"        -- units: °C
-                             , "--High"     , "80"        -- units: °C
-                             , "--low"      , "#c3cdc8"
-                             , "--normal"   , "darkorange"
-                             , "--high"     , "darkred"
-                             ] 50
+        --, Run CoreTemp       [ "--template" , "  <core0> °C "
+        --                     , "--Low"      , "70"        -- units: °C
+        --                     , "--High"     , "80"        -- units: °C
+        --                     , "--low"      , "#c3cdc8"
+        --                     , "--normal"   , "darkorange"
+        --                     , "--high"     , "darkred"
+        --                     ] 50
 
+        --  , Run MPD ["-t"," <artists> <albums> <songs> "] 10
+            
         -- memory usage monitor
-        , Run Memory         [ "--template" ,"  <usedratio>% "
-                             , "--Low"      , "20"        -- units: %
-                             , "--High"     , "90"        -- units: %
-                             , "--low"      , "#c3cdc8"
-                             , "--normal"   , "darkorange"
-                             , "--high"     , "darkred"
-                             ] 10
-
-        -- battery monitor
-        , Run Battery        [ "--template" , "Batt: <acstatus>"
-                             , "--Low"      , "10"        -- units: %
-                             , "--High"     , "80"        -- units: %
-                             , "--low"      , "darkred"
-                             , "--normal"   , "darkorange"
-                             , "--high"     , "darkgreen"
-
-                             , "--" -- battery specific options
-                                       -- discharging status
-                                       , "-o"	, "<left>% (<timeleft>)"
-                                       -- AC "on" status
-                                       , "-O"	, "<fc=#dAA520>Charging</fc>"
-                                       -- charged status
-                                       , "-i"	, "<fc=#006000>Charged</fc>"
-                             ] 50
-
-
+        --, Run Memory         [ "--template" ," <usedratio>% "
+        --                     , "--Low"      , "20"        -- units: %
+        --                     , "--High"     , "90"        -- units: %
+        --                     , "--low"      , "#c3cdc8"
+        --                     , "--normal"   , "darkorange"
+        --                     , "--high"     , "darkred"
+        --                     ]  10
+                   
         --, Run Volume "default" "Master" [] 10
+
 
         --, Run "default" "Master" ["--template", "vol:<vol>"] 10
 
-        ,Run Com "/bin/bash" ["-c", "~/.local/bin/statusbar/volume"]  "myvolume" 5
+        
 
-        , Run MPD ["-t", "<state>: <artist> - <track>"] 10
+        -- Scripts from .local/bin folder
+        , Run Com "/bin/bash" ["-c", "~/.local/bin/statusbar/volume"] "myvolume" 5
 
+        , Run Com  "/bin/bash" ["-c", "memory"] "mymemory" 10
 
+        , Run Com "/bin/bash"  ["-c", "cpu"] "mycpu" 10
+
+        --[Run Weather "/bin/bash"  ["-c", "weather"] "myweather" ]10
+
+        
+              
+
+        
+  
         -- time and date indicator
-        --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
-        , Run Date           "  <fc=#c3cdc8>%F (%a) %T</fc>" "date" 10
+         , Run Date           "<fc=#2f2b26,#bb11dd> <fn=0></fn> %F (%a) %T </fc>" "date" 10
+
 
         -- keyboard layout indicator
-        , Run Kbd            [ ("hu"         , "<fc=#c3cdc8>hu</fc>") ]
-        ]
+        , Run Kbd            [ ("hu"         , "<fc=#2f2b26,#2e8b57><fn=0></fn> hu  </fc>") ]
+        
+
+        , Run Com "/bin/bash" ["-c", "trayerpad"]  "trayerpad" 10
+          ]
    }
+
