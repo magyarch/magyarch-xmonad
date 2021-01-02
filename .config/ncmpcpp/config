@@ -1,5 +1,6 @@
 [mpd]
-mpd_music_dir = "/~/Zenék/"
+mpd_music_dir = "~/Zenék/"
+ncmpcpp_directory = "~/.config/ncmpcpp/"
 mpd_host = "localhost"
 mpd_port = "6600"
 mpd_crossfade_time = "2"

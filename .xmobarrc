@@ -1,103 +1,79 @@
 Config {
-
-   -- appearance
+   -- appearance/megjelenés
+   -- elsődleges betűtípus
      font =         "xft:Font Awesome:size=12, JetBrains Mono:size=11:bold:antialias=true"
+   -- másodlagos betűtípusokat ide  
    , additionalFonts = ["Joy Pixels:size=11"]
-
+   -- háttérszín
    , bgColor =      "#2f2b26"
+   -- elötérszín
    , fgColor =      "#c3cdc8"
+   -- ez egyértelmü szerintetem/pozicíó/bar helyzete,méretei
    , position =     TopSize L 97 23
    --, position = Static { xpos = 0, ypos = 0, width = 1920, height = 23 },
+   -- átlátszóság
    , alpha    = 255
-   --, overrideRedirect = True 
-   --, border =       BottomB
+   --, overrideRedirect = True
+   -- keret/alsó részre
+   --, border = BottomB
+   -- keret színe a bar-nak
    --, borderColor =  "#2e8b57"
+   -- ikonok helye/elérési út
      , iconRoot = "/home/xeoncpu/.xmonad/xpm/"  -- default: "."
 
-   -- layout
+   -- layout/elrendezés -- plugin nevek,szöveg a jel közé kerüljenek példa: %hello%
    , sepChar =  "%"   -- delineator between plugin names and straight text
+   -- elválasztó bal - elválasztó a bal-jobb igazítás között a bar-on
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = " <box type=Bottom width=2 color=#c3cdc8> <icon=xmonad.xpm/>  %UnsafeStdinReader% </box> }{  <fc=#2f2b26,#11aabb> <fn=0></fn> %mycpu% </fc><fc=#2f2b26,#0876ee> %mymemory% </fc><fc=#2f2b26,#ef9cbb>%LHBP%</fc><action=`urxvt -e calcurse` button=1>%date%</action><fc=#2f2b26,#2e8b57> %myvolume% | %kbd%  </fc>"
+   , template = " <box type=Bottom width=2 color=#c3cdc8> <icon=xmonad.xpm/>  %UnsafeStdinReader% </box> }{ <fc=#2f2b26,#11aabb> <fn=0></fn> %mycpu% </fc><fc=#2f2b26,#0876ee> %mymemory% </fc><fc=#2f2b26,#ef9cbb>%LHBP%</fc><action=`urxvt -e calcurse` button=1>%date%</action><fc=#2f2b26,#2e8b57> %myvolume% | %kbd%  </fc>"
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
    , hideOnStart =      False   -- start with window unmapped (hidden)
    , allDesktops =      True    -- show on all desktops
+   -- átirányfelülbírálás =  Igaz  -- állítsa be az átirányítás felülbírálását
    , overrideRedirect = True    -- set the Override Redirect flag (Xlib)
+   -- Legszélesebbet  = Hamis   -- válassza a legszélesebb kijelzőt (többmonitoros)
    , pickBroadest =     False   -- choose widest display (multi-monitor)
+   -- tartós    =       Igaz    -- engedélyezése /elrejtés letiltása (Igaz-True állitás) = letiltva) ez most az alap beállitás
    , persistent =       True    -- enable/disable hiding (True = disabled)
 
    , commands = 
           
-        -- weather monitor
+        -- weather monitor / időjárás monitorozás
         [Run Weather "LHBP" [ "-t", " <fn=0></fn>  <tempC>°C / <fn=0></fn> <rh>% "] 36000
-        , Run MPD ["-t", "<state>: <artist> - <track>"] 10
+        -- terminalos zene alkalmazás(jelenleg nm veszi az adást)
+        --, Run MPD ["-t", "<state>: <artist> - <track>"] 10
+
         -- Stdinreadeer
-	    --, Run StdinReader
+	      --, Run StdinReader
         , Run UnsafeStdinReader
 
-        -- network activity monitor (dynamic interface resolution)
-        -- , Run DynNetwork ["-t","<rx> | <tx>","-S","True","-L","0","-H","6000","--normal","green","--high","red"] 10
-        -- , Run Uptime [] 600
-        -- cpu activity monitor
-        , Run MultiCpu       [ "--template" , "   <total> % "
-                             , "--Low"      , "50"         -- units: %
-                             , "--High"     , "85"         -- units: %
-                             , "--low"      , "#c3cdc8"
-                             , "--normal"   , "darkorange"
-                             , "--high"     , "darkred"
-                             ] 10
-
-        -- cpu core temperature monitor
-        --, Run CoreTemp       [ "--template" , "  <core0> °C "
-        --                     , "--Low"      , "70"        -- units: °C
-        --                     , "--High"     , "80"        -- units: °C
-        --                     , "--low"      , "#c3cdc8"
-        --                     , "--normal"   , "darkorange"
-        --                     , "--high"     , "darkred"
-        --                     ] 50
-
-        --  , Run MPD ["-t"," <artists> <albums> <songs> "] 10
-            
-        -- memory usage monitor
-        --, Run Memory         [ "--template" ," <usedratio>% "
-        --                     , "--Low"      , "20"        -- units: %
-        --                     , "--High"     , "90"        -- units: %
-        --                     , "--low"      , "#c3cdc8"
-        --                     , "--normal"   , "darkorange"
-        --                     , "--high"     , "darkred"
-        --                     ]  10
-                   
+        -- network activity monitor (dynamic interface resolution) /hálozat aktivitás
+        --, Run DynNetwork ["-t","<rx> | <tx>","-S","True","-L","0","-H","6000","--normal","green","--high","red"] 10
+        -- bekapcsolástól számolt idő
+        --, Run Uptime [] 600
+        -- alap hangbeállitás alzában vagy ha gui-t használsz akkor pavucontrolban.
         --, Run Volume "default" "Master" [] 10
-
-
         --, Run "default" "Master" ["--template", "vol:<vol>"] 10
 
-        
-
-        -- Scripts from .local/bin folder
+        -- Scripts from .local/bin folder /szkriptek a .local/bin mappából
+        -- hangerő modul
         , Run Com "/bin/bash" ["-c", "~/.local/bin/statusbar/volume"] "myvolume" 5
-
+        -- memória modul
         , Run Com  "/bin/bash" ["-c", "memory"] "mymemory" 10
-
+        -- processzor hőmérséklet figyelő
         , Run Com "/bin/bash"  ["-c", "cpu"] "mycpu" 10
-
+        -- időjárás modul egyenlőre nem műkszik
         --[Run Weather "/bin/bash"  ["-c", "weather"] "myweather" ]10
-
-        
-              
-
-        
-  
+        -- év,hó,nap indikátor
         -- time and date indicator
          , Run Date           "<fc=#2f2b26,#bb11dd> <fn=0></fn> %F (%a) %T </fc>" "date" 10
-
-
+        -- billenytyűkiosztás indikátor
         -- keyboard layout indicator
         , Run Kbd            [ ("hu"         , "<fc=#2f2b26,#2e8b57><fn=0></fn> hu  </fc>") ]
-        
-
-        , Run Com "/bin/bash" ["-c", "trayerpad"]  "trayerpad" 10
+        -- ha a trayer-t használnád erre szükséged lesz(elötte célszerü telepíteni sudo pacman -S trayer)
+        --, Run Com "/bin/bash" ["-c", "trayerpad"]  "trayerpad" 10
           ]
    }
 
