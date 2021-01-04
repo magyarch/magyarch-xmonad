@@ -3,6 +3,7 @@
 
 # Adds `~/.scripts` and all subdirectories to $PATH
 export PATH="$PATH:$(du "$HOME/.local/bin/" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
+export PATH="$PATH:$HOME/.xmonad/"
 export EDITOR="nvim"
 export TERMINAL="alacritty"
 export TERMFLOAT="urxvt"

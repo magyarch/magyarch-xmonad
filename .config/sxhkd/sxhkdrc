@@ -20,7 +20,7 @@ super + {_,shift + } n
 
 # S,R,lock script,calendar app
 super + {_,shift + } c
-    {power, $TERMFLOAT -g 90x30+60+30 -e calcurse}
+    {power, $TERMFLOAT -g 70x20-16+30 -e calcurse}
 
 # Default web browser brave and firefox
 super + {_,shift + } w
@@ -41,6 +41,33 @@ super + {KP_Home,KP_End}
 # Kill recording and stream
 super + shift + x
     killall ffmpeg
+
+
+# Xmonad (wm) related shortcuts
+
+# Kill window
+super + q
+    xmonadctl kill
+
+# Push floating windows back to tilling
+super + t
+    xmonadctl sink
+
+# Expand and Shrink the master area       
+super + {h,l}
+    {xmonadctl expand,xmonadctl shrink}
+
+# Focus up,down,master
+super + {k,j}
+    xmonadctl focus-{up,down}
+  
+super + shift + {k,j}
+    {xmonadctl swap-{up,down}      
+
+# Swap master     
+super + shift + m
+    xmonadctl swap-master
+
 
 
 #################################################
