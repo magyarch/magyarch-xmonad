@@ -107,6 +107,8 @@ set clipboard=unnamedplus
 
 " Update binds when sxhkdrc is updated.
 	autocmd BufWritePost *sxhkdrc !pkill -USR1 sxhkd
+" Update xmonad.hs after edit.
+	autocmd BufWritePost *xmonad.hs !xmonad --recompile && xmonad --restart
 
 " Run xrdb whenever Xdefaults or Xresources are updated.
 	autocmd BufWritePost *Xresources,*Xdefaults !xrdb %
