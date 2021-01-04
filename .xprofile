@@ -7,7 +7,7 @@ xset r rate 500 30 &	# Speed xrate up
 unclutter &		# Remove mouse when idle
 picom --config ~/.config/picom.conf &		# xcompmgr for transparency
 dunst &                 # dunst for notifications
-mpdupdate &
+#mpdupdate &
 #(sleep 1s && ~/.config/polybar/launch.sh) &
 #conky &
 nm-applet &
