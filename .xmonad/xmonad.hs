@@ -1,22 +1,22 @@
 -- MagyArch xmonad.hs configuration
 
---import XMonad
 import XMonad hiding ((|||))
 --UTILS
 import XMonad.Util.Themes
 import XMonad.Util.EZConfig
 import System.IO (Handle, hPutStrLn)
 import System.Exit
+--import XMonad.Util.NamedScratchpad
+
 --LAYOUTS
 import XMonad.Layout.Spacing
 import XMonad.Layout.Fullscreen (fullscreenFull)
 import XMonad.Layout.Grid
-import XMonad.Layout.Tabbed 
+import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
-import XMonad.Layout.NoBorders (noBorders, smartBorders) 
+import XMonad.Layout.NoBorders (noBorders, smartBorders)
 import XMonad.Layout.DecorationMadness
 import XMonad.Layout.LayoutCombinators
---import XMonad.Layout.Gaps
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 --HOOKS
@@ -31,7 +31,7 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import Data.Monoid
 import Control.Monad (liftM2)
-import XMonad.ManageHook
+
 
 
 
@@ -66,6 +66,7 @@ myNormalBorderColor  = "#2f2b26"
 myFocusedBorderColor = "#2e8b57"
 
 ------------------------------------------------------------------------
+
 -- Layouts:
 
 -- You can specify and transform your layouts by modifying these values.
@@ -76,18 +77,15 @@ myFocusedBorderColor = "#2e8b57"
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 
-myLayout = avoidStruts $ smartBorders $ spacingRaw True (Border 5 5 5 5) True (Border 5 5 5 5) True $ 
+myLayout = avoidStruts $ smartBorders $ spacingRaw True (Border 5 5 5 5) True (Border 5 5 5 5) True $
 
-           mkToggle (NBFULL ?? NOBORDERS ?? EOT) 
-           
+           mkToggle (NBFULL ?? NOBORDERS ?? EOT)
+
            tiled ||| Mirror tiled ||| Grid ||| tabbed shrinkText myTabConfig ||| ThreeCol 1 (3/100) (1/2) ||| ThreeColMid 1 (3/100) (1/2) ||| Full
 
      where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
-
-     -- In this layout the second pane will only show the focused window.
-  --   twopane = spacing 3 $ TwoPane delta ratio
 
      -- The default number of windows in the master pane
      nmaster = 1
@@ -108,7 +106,7 @@ myTabConfig = defaultTheme {
     inactiveTextColor = "#c3cdc8",
     inactiveColor = "#2f2b26"
 }
-                  
+
 
 -- WORKSPACES
 
@@ -125,15 +123,12 @@ myTabConfig = defaultTheme {
 xmobarEscape = concatMap doubleLts
     where doubleLts '<' = "<<"
           doubleLts x = [x]
---myWorkspaces    = ["\61612","\61899","\61947","\61635","\61502","\61501","\61705","\61564","\62150","\61872"]
 
-
-
---myBaseConfig = desktopConfig
 --myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
-myWorkspaces    = clickable . (map xmobarEscape) $ ["\61612","\61899","\61947","\61635","\61502","\61501","\61705","\61564","\62150","\61872"]
+myWorkspaces = clickable . (map xmobarEscape) $ ["\61612","\61899","\61947","\61635","\61502","\61501","\61705","\61564","\62150","\61872"]
      where
-               clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" | (i,ws) <- zip [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] l, let n = i ]                  
+               clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" | (i,ws) <- zip [1..9] l, let n = i ]
+--------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- Window rules:
 
@@ -148,43 +143,32 @@ myWorkspaces    = clickable . (map xmobarEscape) $ ["\61612","\61899","\61947","
 --
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
---
-myManageHook = composeAll . concat $ 
+
+myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
+myManageHook = composeAll . concat $
     [ [isDialog --> doCenterFloat]
    -- , [isFullscreen --> (doF W.focusDown <+> doFullFloat)]
-    , [className =? c --> doCenterFloat | c <- myCFloats]
-    , [title =? t --> doFloat | t <- myTFloats]
-    , [resource =? r --> doFloat | r <- myRFloats]
-    , [resource =? i --> doIgnore | i <- myIgnores]
-    , [className =? c --> doShift (myWorkspaces !! 0) <+> viewShift (myWorkspaces !! 0)        | c <- my1Shifts]
-    , [className =? c --> doShift (myWorkspaces !! 1) <+> viewShift (myWorkspaces !! 1)        | c <- my2Shifts]
-    , [className =? c --> doShift (myWorkspaces !! 2) <+> viewShift (myWorkspaces !! 2)        | c <- my3Shifts]
-    , [className =? c --> doShift (myWorkspaces !! 3) <+> viewShift (myWorkspaces !! 3)        | c <- my4Shifts]
-    , [className =? c --> doShift (myWorkspaces !! 4) <+> viewShift (myWorkspaces !! 4)        | c <- my5Shifts] 
-    , [className =? c --> doShift (myWorkspaces !! 5) <+> viewShift (myWorkspaces !! 5)        | c <- my6Shifts]
-    , [className =? c --> doShift (myWorkspaces !! 6) <+> viewShift (myWorkspaces !! 6)        | c <- my7Shifts]
-    , [className =? c --> doShift (myWorkspaces !! 7) <+> viewShift (myWorkspaces !! 7)        | c <- my8Shifts]
-    , [className =? c --> doShift (myWorkspaces !! 8) <+> viewShift (myWorkspaces !! 8)        | c <- my9Shifts]
-    , [className =? c --> doShift (myWorkspaces !! 9) <+> viewShift (myWorkspaces !! 9)        | c <- my10Shifts]
-       ]
-    where
-    viewShift    = doF . liftM2 (.) W.greedyView W.shift
-    myCFloats = ["sxiv", "Pavucontrol", "MEGAsync", "URxvt", "Xfce4-terminal", "mpv"]
-    myTFloats = ["Downloads", "Save As..."]
-    myRFloats = []
-    myIgnores = ["desktop_window"]
-    my1Shifts = ["Brave-browser", "Vivaldi-stable", "Firefox"]
-    my2Shifts = ["discord"]
-    my3Shifts = ["Subl3", "subl3"]
-    my4Shifts = ["discord"]
-    my5Shifts = ["Gimp"]
-    my6Shifts = ["vlc", "mpv"]
-    my7Shifts = ["Virtualbox"]
-    my8Shifts = ["Pcmanfm"]
-    my9Shifts = ["mkvtoolnix-gui"]
-    my10Shifts = ["spotify"]
+    , [title =?    "vifm"  --> doFloat]
+    , [resource =? "Downloads" --> doFloat]
+    , [resource =? "Save As..." --> doFloat]
+    , [resource =? "desktop_window" --> doIgnore]
+    , [className =? "sxiv" --> doCenterFloat]
+    , [className =? "Pavucontrol" --> doCenterFloat]
+    , [className =? "MEGAsync" --> doCenterFloat]
+    , [className =? "URxvt" --> doCenterFloat]
+    , [className =? "Zathura" --> doCenterFloat]
+    , [className =? "Brave-browser" --> doShift (myWorkspaces !! 0) <+> viewShift (myWorkspaces !! 0)]        
+    , [className =? "discord" --> doShift (myWorkspaces !! 1) <+> viewShift (myWorkspaces !! 1)]        
+    , [className =? "Subl3"  --> doShift (myWorkspaces !! 2) <+> viewShift (myWorkspaces !! 2)]        
+    , [className =? "Gimp" --> doShift (myWorkspaces !! 3) <+> viewShift (myWorkspaces !! 3)]        
+    , [className =? "Vlc" --> doShift (myWorkspaces !! 4) <+> viewShift (myWorkspaces !! 4)]        
+    , [className =? "mpv" --> doShift (myWorkspaces !! 5) <+> viewShift (myWorkspaces !! 5)]        
+    , [className =? "Virtualbox" --> doShift (myWorkspaces !! 6) <+> viewShift (myWorkspaces !! 6)]        
+    , [className =? "Pcmanfm" --> doShift (myWorkspaces !! 7) <+> viewShift (myWorkspaces !! 7)]        
+    , [className =? "mkvtoolnix-gui" --> doShift (myWorkspaces !! 8) <+> viewShift (myWorkspaces !! 8)]      
+    ] where viewShift = doF . liftM2 (.) W.greedyView W.shift
 
-
+    
 ------------------------------------------------------------------------
 -- Event handling
 
@@ -196,7 +180,10 @@ myManageHook = composeAll . concat $
 --
 myEventHook = serverModeEventHook <+> serverModeEventHookCmd <+> serverModeEventHookF "XMONAD_PRINT" (io . putStrLn)  <+> ewmhDesktopsEventHook <+> fullscreenEventHook <+> docksEventHook <+> minimizeEventHook 
 
---ewmhDesktopsEventHook = fullscreenEventHook <+> docksEventHook <+> minimizeEventHook 
+
+
+
+--ewmhDesktopsEventHook = fullscreenEventHook <+> docksEventHook <+> minimizeEventHook
 
 ------------------------------------------------------------------------
 -- Status bars and logging
@@ -239,8 +226,8 @@ main = xmonad =<< statusBar myBar myPP toggleStrutsKey defaults
 --
 -- No need to modify this.
 
---defaults :: XConfig ((->) (l a)) 
-defaults = def { 
+--defaults :: XConfig ((->) (l a))
+defaults = def {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
@@ -274,19 +261,19 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --[ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
     -- close focused window
-    [ ((modm,               xK_q     ), kill)
+    --[ ((modm,               xK_q     ), kill)
 
     -- toggle noboderfull
-    , ((modm, xK_f), sendMessage $ Toggle NBFULL)
+    [ ((modm, xK_f), sendMessage $ Toggle NBFULL)
 
     -- Move focus to the next window
     , ((modm,               xK_Tab   ), windows W.focusDown)
 
     -- Move focus to the next window
-    , ((modm,               xK_j     ), windows W.focusDown)
+    --, ((modm,               xK_j     ), windows W.focusDown)
 
     -- Move focus to the previous window
-    , ((modm,               xK_k     ), windows W.focusUp  )
+    --, ((modm,               xK_k     ), windows W.focusUp  )
 
     -- Move focus to the master window
     , ((modm,               xK_m     ), windows W.focusMaster  )
@@ -295,19 +282,19 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_m     ), windows W.swapMaster)
 
     -- Swap the focused window with the next window
-    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
+    --, ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
 
     -- Swap the focused window with the previous window
-    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+    --, ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
 
     -- Shrink the master area
-    , ((modm,               xK_h     ), sendMessage Shrink)
+    --, ((modm,               xK_h     ), sendMessage Shrink)
 
     -- Expand the master area
-    , ((modm,               xK_l     ), sendMessage Expand)
+    --, ((modm,               xK_l     ), sendMessage Expand)
 
     -- Push window back into tiling
-    , ((modm,               xK_t     ), withFocused $ windows . W.sink)
+    --, ((modm,               xK_t     ), withFocused $ windows . W.sink)
 
     --  Jump directly to favorite layout
     , ((modm .|. shiftMask, xK_t), sendMessage $ JumpToLayout "Tabbed Simplest") -- jump directly to the Tabbed layout
@@ -317,7 +304,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_g), sendMessage $ JumpToLayout "Grid")
 
     , ((modm .|. shiftMask, xK_u), sendMessage $ JumpToLayout "Mirror Tall")
-    
+
     , ((modm .|. shiftMask, xK_z), sendMessage $ JumpToLayout  "ThreeCol")
 
     -- Rotate through the available layout algorithms
@@ -331,6 +318,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Deincrement the number of windows in the master area
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
+
+    --, ((modm .|. controlMask, xK_t), namedScratchpadAction myScratchPads "vifm")
+    --, ((modm .|. controlMask, xK_h), namedScratchpadAction myScratchpads "htop")
 
     -- Toggle the status bar gap
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
