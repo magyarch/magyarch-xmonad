@@ -5,7 +5,7 @@ sxhkd  &	# Bind keys
 xsetroot -cursor_name left_ptr &
 xset r rate 500 30 &	# Speed xrate up
 unclutter &		# Remove mouse when idle
-picom --config ~/.config/picom.conf &		# xcompmgr for transparency
+picom --config ~/.config/picom.conf &		# picom for transparency
 dunst &                 # dunst for notifications
 #mpdupdate &
 #(sleep 1s && ~/.config/polybar/launch.sh) &
@@ -16,7 +16,7 @@ urxvtd -q -o -f &
 #blueberry-tray &
 #xrandr --output LVDS1 --mode 1366x768 --output HDMI1 --mode 1920x1080 --right-of LVDS1 &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-xwallpaper --no-randr /usr/share/backgrounds/magyarch/wallpaper.png &
+#xwallpaper --no-randr /usr/share/backgrounds/magyarch/wallpaper.png &
 #zathura ~/.local/bin/Magyarch-bspwm.pdf &
 #trayer --edge top --align right \
 #    --SetDockType true --SetPartialStrut true --expand true \

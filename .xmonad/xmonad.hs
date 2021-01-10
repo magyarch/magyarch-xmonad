@@ -6,7 +6,7 @@ import XMonad.Util.Themes
 import XMonad.Util.EZConfig
 import System.IO (Handle, hPutStrLn)
 import System.Exit
---import XMonad.Util.NamedScratchpad
+import XMonad.Util.NamedScratchpad
 
 --LAYOUTS
 import XMonad.Layout.Spacing
@@ -108,6 +108,20 @@ myTabConfig = defaultTheme {
 }
 
 
+myScratchPads :: [NamedScratchpad]
+myScratchPads = [
+    NS "scratchpad" "urxvt -name scratchpad" (resource =? "scratchpad")
+        (customFloating $ W.RationalRect (1/4) (1/4) (2/4) (2/4)),
+
+    NS "ncmpcpp" "urxvt -name ncmpcpp -e ncmpcpp" (resource =? "ncmpcpp")
+        (customFloating $ W.RationalRect (1/4) (1/4) (2/4) (2/4)),    
+
+    NS "pavucontrol" "pavucontrol" (className =? "Pavucontrol")
+        (customFloating $ W.RationalRect (1/4) (1/4) (2/4) (2/4))
+  ]
+
+
+
 -- WORKSPACES
 
 -- The default number of workspaces (virtual screens) and their names.
@@ -145,17 +159,17 @@ myWorkspaces = clickable . (map xmobarEscape) $ ["\61612","\61899","\61947","\61
 -- 'className' and 'resource' are used below.
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
-myManageHook = composeAll . concat $
+myManageHook = composeAll . concat $ 
     [ [isDialog --> doCenterFloat]
-   -- , [isFullscreen --> (doF W.focusDown <+> doFullFloat)]
-    , [title =?    "vifm"  --> doFloat]
+    , [isFullscreen --> (doF W.focusDown <+> doFullFloat)]
+    , [title =? []  --> doFloat]
     , [resource =? "Downloads" --> doFloat]
     , [resource =? "Save As..." --> doFloat]
     , [resource =? "desktop_window" --> doIgnore]
     , [className =? "sxiv" --> doCenterFloat]
-    , [className =? "Pavucontrol" --> doCenterFloat]
+    --, [className =? "Pavucontrol" --> doCenterFloat]
     , [className =? "MEGAsync" --> doCenterFloat]
-    , [className =? "URxvt" --> doCenterFloat]
+    --, [className =? "URxvt" --> doCenterFloat]
     , [className =? "Zathura" --> doCenterFloat]
     , [className =? "Brave-browser" --> doShift (myWorkspaces !! 0) <+> viewShift (myWorkspaces !! 0)]        
     , [className =? "discord" --> doShift (myWorkspaces !! 1) <+> viewShift (myWorkspaces !! 1)]        
@@ -244,8 +258,7 @@ defaults = def {
 
       -- hooks, layouts
         layoutHook         = myLayout,
-        manageHook         = myManageHook
-        ,
+        manageHook         = (myManageHook <+> namedScratchpadManageHook myScratchPads),      
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook
@@ -319,8 +332,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Deincrement the number of windows in the master area
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
-    --, ((modm .|. controlMask, xK_t), namedScratchpadAction myScratchPads "vifm")
-    --, ((modm .|. controlMask, xK_h), namedScratchpadAction myScratchpads "htop")
+    , ((modm .|. controlMask, xK_t), namedScratchpadAction myScratchPads "scratchpad")
+    , ((modm .|. controlMask, xK_h), namedScratchpadAction myScratchPads "pavucontrol")
+    , ((modm .|. shiftMask, xK_n), namedScratchpadAction myScratchPads "ncmpcpp")
 
     -- Toggle the status bar gap
     -- Use this binding with avoidStruts from Hooks.ManageDocks.

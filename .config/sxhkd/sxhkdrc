@@ -1,6 +1,6 @@
 # Main and float terminal
 super + {_,shift + } Return
-    {$TERMINAL, $TERMFLOAT -g 110x30}
+    {$TERMINAL, $TERMFLOAT}
 
 # Dmenu2 and rofi(window switcher, application launcher)
 super + {_,shift +} d
@@ -15,8 +15,8 @@ super + {_,shift + } e
     {show_keys.sh, subl3}
 
 # News, tui music player
-super + {_,shift + } n
-    {$TERMINAL -e newsboat, $TERMFLOAT -g 110x30 -e ncmpcpp}
+#super + {_,shift + } n
+ #   {$TERMINAL -e newsboat, $TERMFLOAT -g 110x30 -e ncmpcpp}
 
 # S,R,lock script,calendar app
 super + {_,shift + } c
@@ -32,7 +32,7 @@ super + {_,shift + } p
 
 # Reload sxhkd
 super + {_,shift + } Escape
-    {pkill -USR1 -x sxhkd ;\notify-send "Sxhkd újratölt.", xmonad --recompile && xmonad --restart ;\notify-send "xmonad recompile and restart."}
+    {pkill -USR1 -x sxhkd ;\notify-send "Sxhkd reloaded", xmonad --recompile && xmonad --restart ;\notify-send 'xmonad recompiled'}
 
 # Record and stream
 super + {KP_Home,KP_End}
@@ -53,20 +53,21 @@ super + q
 super + t
     xmonadctl sink
 
-# Expand and Shrink the master area       
+# Expand and Shrink the master area
 super + {h,l}
     {xmonadctl expand,xmonadctl shrink}
 
 # Focus up,down,master
 super + {k,j}
     xmonadctl focus-{up,down}
-  
-super + shift + {k,j}
-    {xmonadctl swap-{up,down}      
 
-# Swap master     
+super + shift + {k,j}
+    {xmonadctl swap-{up,down}
+
+# Swap master
 super + shift + m
     xmonadctl swap-master
+
 
 
 
@@ -75,8 +76,8 @@ super + shift + m
 ################################################
 
 # On/off transparency, pavucontrol
-alt + {a,b}
-   {pavucontrol,toggleprogram "picom -b"}
+alt + b
+   toggleprogram "picom -b"
 
 ##############################################
         # FUNCTION KEYS#
@@ -84,7 +85,7 @@ alt + {a,b}
 
 # Open help doc
 super + F1
-    zathura ~/.local/bin/Magyarch-bspwm.pdf
+    zathura $HOME/.local/bin/magyarch-xmonad-help.pdf
 
 # Edit conf files,select display,search the net
 super + {F2,F3,F11}
@@ -120,4 +121,7 @@ F12
    amixer set Master toggle
 
 F1
-  xfce4-terminal --drop-down -e htop
+  tdrop -ma -w 1916 -y 0 $TERMFLOAT -name 'scratchpad' -e htop
+
+alt + a
+ tdrop -ma -w 1916 -y 0 pavucontrol
