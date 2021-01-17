@@ -120,8 +120,8 @@ alt + {Up,Down}
 F12
    amixer set Master toggle
 
-F1
-  tdrop -ma -w 1916 -y 0 $TERMFLOAT -name 'scratchpad' -e htop
+#F1
+#  tdrop -ma -w 1916 -y 0 $TERMFLOAT -name 'scratchpad' -e htop
 
 alt + a
- tdrop -ma -w 1916 -y 0 pavucontrol
+ tdrop -ma -w 1916 -y 0 alacritty

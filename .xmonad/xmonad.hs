@@ -113,7 +113,7 @@ myScratchPads = [
     NS "scratchpad" "urxvt -name scratchpad" (resource =? "scratchpad")
         (customFloating $ W.RationalRect (1/4) (1/4) (2/4) (2/4)),
 
-    NS "ncmpcpp" "urxvt -name ncmpcpp -e ncmpcpp" (resource =? "ncmpcpp")
+    NS "ncmpcpp" "urxvt -name 'ncmpcpp' -e ncmpcpp" (resource =? "ncmpcpp")
         (customFloating $ W.RationalRect (1/4) (1/4) (2/4) (2/4)),    
 
     NS "pavucontrol" "pavucontrol" (className =? "Pavucontrol")
@@ -159,24 +159,23 @@ myWorkspaces = clickable . (map xmobarEscape) $ ["\61612","\61899","\61947","\61
 -- 'className' and 'resource' are used below.
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
-myManageHook = composeAll . concat $ 
+myManageHook = composeAll . concat $  
     [ [isDialog --> doCenterFloat]
     , [isFullscreen --> (doF W.focusDown <+> doFullFloat)]
-    , [title =? []  --> doFloat]
+    , [title =? "calcurse"  --> doFloat]
     , [resource =? "Downloads" --> doFloat]
     , [resource =? "Save As..." --> doFloat]
     , [resource =? "desktop_window" --> doIgnore]
-    , [className =? "sxiv" --> doCenterFloat]
-    --, [className =? "Pavucontrol" --> doCenterFloat]
+    , [resource =? "sxiv" --> doCenterFloat]
     , [className =? "MEGAsync" --> doCenterFloat]
-    --, [className =? "URxvt" --> doCenterFloat]
+    , [className =? "Lxappearance" --> doCenterFloat]
     , [className =? "Zathura" --> doCenterFloat]
     , [className =? "Brave-browser" --> doShift (myWorkspaces !! 0) <+> viewShift (myWorkspaces !! 0)]        
     , [className =? "discord" --> doShift (myWorkspaces !! 1) <+> viewShift (myWorkspaces !! 1)]        
     , [className =? "Subl3"  --> doShift (myWorkspaces !! 2) <+> viewShift (myWorkspaces !! 2)]        
     , [className =? "Gimp" --> doShift (myWorkspaces !! 3) <+> viewShift (myWorkspaces !! 3)]        
     , [className =? "Vlc" --> doShift (myWorkspaces !! 4) <+> viewShift (myWorkspaces !! 4)]        
-    , [className =? "mpv" --> doShift (myWorkspaces !! 5) <+> viewShift (myWorkspaces !! 5)]        
+    , [className =? "mpv" --> doCenterFloat <+> doShift (myWorkspaces !! 5) <+> viewShift (myWorkspaces !! 5)]        
     , [className =? "Virtualbox" --> doShift (myWorkspaces !! 6) <+> viewShift (myWorkspaces !! 6)]        
     , [className =? "Pcmanfm" --> doShift (myWorkspaces !! 7) <+> viewShift (myWorkspaces !! 7)]        
     , [className =? "mkvtoolnix-gui" --> doShift (myWorkspaces !! 8) <+> viewShift (myWorkspaces !! 8)]      

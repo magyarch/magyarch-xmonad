@@ -28,7 +28,7 @@ Config {
    --, borderColor =  "#2e8b57"
 
    -- ikonok helye/elérési út
-     , iconRoot = "/home/xeoncpu/.xmonad/xpm/"  -- default: "."
+   , iconRoot = "/home/xeoncpu/.xmonad/xpm/"  
 
    -- layout/elrendezés -- plugin nevek,szöveg a jel közé kerüljenek példa: %hello%
    , sepChar =  "%"   -- delineator between plugin names and straight text
@@ -36,7 +36,7 @@ Config {
    -- elválasztó bal - elválasztó a bal-jobb igazítás között a bar-on
    , alignSep = "}{"  -- separator between left-right alignment
 
-   , template = " <box type=Bottom width=2 color=#c3cdc8> <icon=xmonad.xpm/>  %UnsafeStdinReader% </box> }{ <fc=#2f2b26,#11aabb> <fn=0></fn> %mycpu% </fc><fc=#2f2b26,#0876ee> %mymemory% </fc><fc=#2f2b26,#ef9cbb>%LHBP%</fc><action=`urxvt -e calcurse` button=1>%date%</action><fc=#2f2b26,#2e8b57> %myvolume% | %kbd%  </fc>"
+   , template = " <box type=Bottom width=2 color=#c3cdc8> <action=`rofi -modi run,drun -show drun -location 1 -xoffset 10 -yoffset 23 -line-padding 4 -columns 1 -width 15 -lines 20 -padding 15 -hide-scrollbar -show-icons -drun-icon-theme` button=1><icon=xmonad.xpm/></action>  %UnsafeStdinReader% </box> }{ <fc=#2f2b26,#c3cdc8>%mpd% </fc><fc=#2f2b26,#11aabb> <fn=0></fn> %mycpu% </fc><fc=#2f2b26,#0876ee> %mymemory% </fc><fc=#2f2b26,#ef9cbb>%LHBP%</fc><action=`urxvt -g 70x20-16+30 -e calcurse` button=1>%date%</action><fc=#2f2b26,#2e8b57> %myvolume% | %kbd%  </fc>"
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -57,7 +57,7 @@ Config {
         [Run Weather "LHBP" [ "-t", " <fn=0></fn>  <tempC>°C / <fn=0></fn> <rh>% "] 36000
 
         -- terminalos zene alkalmazás(jelenleg nm veszi az adást)
-        --, Run MPD ["-t", "<state>: <artist> - <track>"] 10
+        , Run MPD ["-t", "<state>: <artist> - <track>"] 10
 
         -- Stdinreadeer
 	      --, Run StdinReader
