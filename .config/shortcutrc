@@ -17,4 +17,5 @@ cfx="$EDITOR ~/.xmobarrc" \
 cfmb="$EDITOR ~/.config/ncmpcpp/bindings" \
 cfmc="$EDITOR ~/.config/ncmpcpp/config" \
 cfb="$EDITOR ~/.xmonad/xmonad.hs" \
+cfs="$EDITOR ~/.config/shortcutrc" \
 cfk="$EDITOR ~/.config/sxhkd/sxhkdrc"
