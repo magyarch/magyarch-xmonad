@@ -85,7 +85,7 @@ alt + b
 
 # Open help doc
 super + F1
-    zathura $HOME/.local/bin/magyarch-xmonad-help.pdf
+    zathura $HOME/.local/share/Magyarch-xmonad.pdf
 
 # Edit conf files,select display,search the net
 super + {F2,F3,F11}

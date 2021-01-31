@@ -14,7 +14,7 @@ picom --experimental-backends --inactive-opacity 1.00 --opacity-rule "80:class_g
 #xrandr --output LVDS1 --mode 1366x768 --output HDMI1 --mode 1920x1080 --right-of LVDS1 &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 #xwallpaper --no-randr /usr/share/backgrounds/magyarch/wallpaper.png &
-#zathura ~/.local/bin/Magyarch-bspwm.pdf &
+zathura ~/.local/share/Magyarch-xmonad.pdf &
 #trayer --edge top --align right \
 #    --SetDockType true --SetPartialStrut true --expand true \
 #    --width 5 --height 23 \
