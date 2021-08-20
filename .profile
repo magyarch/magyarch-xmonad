@@ -9,7 +9,7 @@ export TERMINAL="alacritty"
 export TERMFLOAT="urxvt"
 export BROWSER="brave"
 export READER="zathura"
-export FILE="vifm"
+export FILE="vifmrun"
 export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc-2.0"
 export MPD_HOST="$HOME/.config/mpd/socket"
 
