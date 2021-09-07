@@ -3,8 +3,8 @@ env:
   WINIT_HIDPI SCALE_FACTOR: "1.0"
 window:
   dimensions:
-    columns: 111
-    lines: 21
+    columns: 143
+    lines: 33
   padding:
     x: 5
     y: 5
@@ -12,7 +12,7 @@ window:
 scrolling:
   history: 10000
   multiplier: 3
-background_opacity: 0.90
+background_opacity: 0.80
 window.dynamic_title: true
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
@@ -20,14 +20,38 @@ selection:
 # Font Customization
 font:
   normal:
-    family: JetBrains Mono
-    style: Medium
+    # family: mononoki Nerd Font
+    # family: agave Nerd Font
+    # family: Caskaydia Cove Nerd Font
+    family: JetBrains Mono Medium
+    # family: Hurmit Nerd Font Mono
+    # family: DaddyTimeMono Nerd Font
+    # family: Iosevka NF
+    # family: Hack NF
+    # family: SpaceMono NF
+    style: Regular
   bold:
-    family: JetBrains Mono
+    # family: mononoki Nerd Font
+    # family: agave Nerd Font
+    # family: Caskaydia Cove Nerd Font
+    family: JetBrains Mono Medium
+    # family: Hurmit Nerd Font Mono
+    # family: DaddyTimeMono Nerd Font
+    # family: Iosevka NF
+    # family: Hack NF
+    # family: SpaceMono NF
     style: Bold
   italic:
-    family: JetBrains Mono
-    style: Bold
+    # family: mononoki Nerd Font
+    # family: agave Nerd Font
+    # family: Caskaydia Cove Nerd Font
+    family: JetBrains Mono Medium
+    # family: Hurmit Nerd Font Mono
+    # family: DaddyTimeMono Nerd Font
+    # family: Iosevka NF
+    # family: Hack NF
+    # family: SpaceMono NF
+    style: Regular
   size: 11
   offset:
     x: -1
@@ -45,7 +69,7 @@ colors:
   name: Vacuous 2
   author: hal
   primary:
-    background: "#2f2b26"
+    background: "#1a1a1a"
     foreground: "#c3cdc8"
   cursor:
     text: "#101010"
