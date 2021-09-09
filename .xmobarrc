@@ -3,11 +3,11 @@ Config {
    -- elsődleges betűtípus
      font =         "xft:Font Awesome:size=12, JetBrains Mono:size=11:bold:antialias=true"
 
-   -- másodlagos betűtípusokat ide  
+   -- másodlagos betűtípusokat ide
    , additionalFonts = ["Joy Pixels:size=11"]
 
    -- háttérszín
-   , bgColor =      "#2f2b26"
+   , bgColor =      "#1a1a1a"
 
    -- elötérszín/Az alapértelmezett betűszínt határozza meg ami jelen esetben fehér színként van meghatározva.
    , fgColor =      "#c3cdc8"
@@ -20,7 +20,7 @@ Config {
    , alpha    = 255
 
    --, overrideRedirect = True
-   
+
    -- keret/alsó részre
    --, border = BottomB
 
@@ -28,7 +28,7 @@ Config {
    --, borderColor =  "#2e8b57"
 
    -- ikonok helye/elérési út
-   , iconRoot = "/home/xeoncpu/.xmonad/xpm/"  
+   , iconRoot = "/home/xeoncpu/.xmonad/xpm/"
 
    -- layout/elrendezés -- plugin nevek,szöveg a jel közé kerüljenek példa: %hello%
    , sepChar =  "%"   -- delineator between plugin names and straight text
@@ -48,11 +48,11 @@ Config {
    , pickBroadest =     False   -- choose widest display (multi-monitor)
    -- tartós    =       Igaz    -- engedélyezése /elrejtés letiltása (Igaz-True állitás) = letiltva) ez most az alap beállitás
    , persistent =       True    -- enable/disable hiding (True = disabled)
-   -- Ez meghatározza a parancsok vagy tennivalók listáját az xmobar indításakor. 
+   -- Ez meghatározza a parancsok vagy tennivalók listáját az xmobar indításakor.
    -- Az összes új sor vesszővel kezdődik, és Runmeghatározza az információ megszerzésének különböző módjait a rendszer különböző területeiről, és azt, hogyan jelenítse meg ezeket az adatokat a sávon.
-   
-   , commands = 
-          
+
+   , commands =
+
         -- weather monitor / időjárás monitorozás
         [Run Weather "LHBP" [ "-t", " <fn=0></fn>  <tempC>°C / <fn=0></fn> <rh>% "] 36000
 
@@ -65,10 +65,10 @@ Config {
 
         -- network activity monitor (dynamic interface resolution) /hálozat aktivitás
         --, Run DynNetwork ["-t","<rx> | <tx>","-S","True","-L","0","-H","6000","--normal","green","--high","red"] 10
-        
+
         -- bekapcsolástól számolt idő
         --, Run Uptime [] 600
-        
+
         -- alap hangbeállitás alzában vagy ha gui-t használsz akkor pavucontrolban.
         --, Run Volume "default" "Master" [] 10
         --, Run "default" "Master" ["--template", "vol:<vol>"] 10
@@ -76,24 +76,24 @@ Config {
         -- Scripts from .local/bin folder /szkriptek a .local/bin mappából
         -- hangerő modul
         , Run Com "/bin/bash" ["-c", "~/.local/bin/statusbar/volume"] "myvolume" 5
-        
+
         -- memória modul
         , Run Com  "/bin/bash" ["-c", "memory"] "mymemory" 10
-        
+
         -- processzor hőmérséklet figyelő
         , Run Com "/bin/bash"  ["-c", "cpu"] "mycpu" 10
-        
+
         -- időjárás modul egyenlőre nem műkszik
         --[Run Weather "/bin/bash"  ["-c", "weather"] "myweather" ]10
         -- év,hó,nap indikátor
-        
+
         -- time and date indicator
          , Run Date           "<fc=#2f2b26,#bb11dd> <fn=0></fn> %F (%a) %T </fc>" "date" 10
         -- billenytyűkiosztás indikátor
-        
+
         -- keyboard layout indicator
         , Run Kbd            [ ("hu"         , "<fc=#2f2b26,#2e8b57><fn=0></fn> hu  </fc>") ]
-        
+
         -- ha a trayer-t használnád erre szükséged lesz(elötte célszerü telepíteni sudo pacman -S trayer)
         --, Run Com "/bin/bash" ["-c", "trayerpad"]  "trayerpad" 10
           ]
