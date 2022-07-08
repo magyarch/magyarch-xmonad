@@ -1,0 +1,19 @@
+#!/bin/sh
+
+
+case "$1" in
+
+	scratchpad)
+        entry="urxvt -name scratchpad"
+        ;;
+	FM)
+        entry="urxvt -name FM -e vifm"
+        ;;
+    Music)
+        entry="urxvt -name Music -e ncmpcpp"
+esac
+
+xdotool search --onlyvisible --name "$1" windowunmap \
+    || xdotool search --name "$1" windowmap \
+    || $entry &
+

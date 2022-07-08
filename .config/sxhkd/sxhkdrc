@@ -1,10 +1,13 @@
+# Keybinds
+# -------------------------------
+
 # Main and float terminal
-super + Return
+super + a ; Return
     $TERMINAL
 
 # Dmenu2 and rofi(window switcher, application launcher)
 super + {_,shift +} d
-    {dmenu_run -i -p 'Search' -nb '#1a1a1a' -sb '#2e8b57' -fn 'JetBrains Mono Medium-12' -w '760' -h '24' -x '574' -y '48',rofi_run -r}
+    {dmenu_run -i -c -g 3 -l 10 -p 'Search' -nb '#1a1a1a' -sb '#2e8b57' -fn 'JetBrains Mono Nerd-12',rofi_run -r}
 
 # Tui filemanager and same command with sudo
 super + {_,shift + } r
@@ -44,6 +47,7 @@ super + shift + x
 
 
 # Xmonad (wm) related shortcuts
+# ------------------------------------
 
 # Kill window
 super + q
@@ -69,19 +73,19 @@ super + shift + m
     xmonadctl swap-master
 
 
-
-
-#################################################
-           # ALT + KEYS#
-################################################
+# ALT + KEYS
+# ----------------------------------------------
 
 # On/off transparency, pavucontrol
 alt + b
    toggleprogram "picom -b"
 
-##############################################
-        # FUNCTION KEYS#
-#############################################
+alt + t
+   wmctrl -x -a "alacritty" || alacritty -e tmux
+
+
+# FUNCTION KEYS
+# ---------------------------------------------
 
 # Open help doc
 super + F1
@@ -90,7 +94,6 @@ super + F1
 # Edit conf files,select display,search the net
 super + {F2,F3,F11}
   {edconf.sh,displayselect,ducksearch}
-
 
 # Change background
 super + F8
@@ -108,20 +111,16 @@ super + {F9,F10}
 super + F12
     $TERMFLOAT -g 110x30 -e xawtv -c /dev/video0
 
-###########################################
-        # Volume Control
-###########################################
+
+# Volume Control
+# ------------------------------------------------
 
 # Decrease volume -5
 alt + {Up,Down}
-    {amixer set Master 5%+,amixer set Master 5%-}
+    {pamixer --allow-boost -i 10 >/dev/null,pamixer --allow-boost -d 10 >/dev/null}
 
 # Mute volume
 F12
    amixer set Master toggle
 
-#F1
-#  tdrop -ma -w 1916 -y 0 $TERMFLOAT -name 'scratchpad' -e htop
 
-alt + a
- tdrop -ma -w 1916 -y 0 alacritty
