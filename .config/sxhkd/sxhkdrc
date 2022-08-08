@@ -2,7 +2,7 @@
 # -------------------------------
 
 # Main and float terminal
-super + a ; Return
+super + a; Return
     $TERMINAL
 
 # Dmenu2 and rofi(window switcher, application launcher)
@@ -78,7 +78,7 @@ super + shift + m
 
 # On/off transparency, pavucontrol
 alt + b
-   toggleprogram "picom -b"
+   wmctrl -x -a "tabbed" || tabbed alacritty --embed
 
 alt + t
    wmctrl -x -a "alacritty" || alacritty -e tmux
