@@ -1,5 +1,5 @@
 -- MagyArch xmonad.hs configuration
-{-# OPTIONS_GHC -Wno-deprecations #-}
+-- {-# OPTIONS_GHC -Wno-deprecations #-}
 
 import XMonad hiding ((|||))
 --UTILS
@@ -185,7 +185,7 @@ myManageHook = composeAll . concat $
 -- return (All True) if the default handler is to be run afterwards. To
 -- combine event hooks use mappend or mconcat from Data.Monoid.
 
-myEventHook = serverModeEventHook <+> serverModeEventHookCmd <+> serverModeEventHookF "XMONAD_PRINT" (io . putStrLn)  <+> ewmhDesktopsEventHook <+> fullscreenEventHook <+> docksEventHook <+> minimizeEventHook
+myEventHook = serverModeEventHook <+> serverModeEventHookCmd <+> serverModeEventHookF "XMONAD_PRINT" (io . putStrLn)  <+> minimizeEventHook
 
 
 
@@ -227,7 +227,7 @@ toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = xmonad =<< statusBar myBar myPP toggleStrutsKey defaults
+main = xmonad . ewmhFullscreen . ewmh . docks=<< statusBar myBar myPP toggleStrutsKey  defaults
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
