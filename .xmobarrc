@@ -15,7 +15,7 @@ Config {
    -- Meghatározza az xmobar helyzetét a képernyő tetején, a bal oldalon, a képernyő szélességének 100% -át kitöltve (jelen esetben 97).
    , position =     TopSize L 98 22
 
-   --, position = Static { xpos = 0, ypos = 0, width = 3840, height = 23 },
+   --, position = Static { xpos = 0, ypos = 0, width = 1920, height = 23 },
    -- átlátszóság
    , alpha    = 255
 
