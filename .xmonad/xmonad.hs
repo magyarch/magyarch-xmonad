@@ -1,4 +1,5 @@
 -- MagyArch xmonad.hs configuration
+{-# OPTIONS_GHC -Wno-deprecations #-}
 
 import XMonad hiding ((|||))
 --UTILS
@@ -11,15 +12,17 @@ import XMonad.Util.NamedScratchpad
 --LAYOUTS
 import XMonad.Layout.Spacing
 import XMonad.Layout.Fullscreen (fullscreenFull)
-import XMonad.Layout.Grid
-import XMonad.Layout.Tabbed
+--import XMonad.Layout.Grid
+--import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.NoBorders (noBorders, smartBorders)
 import XMonad.Layout.DecorationMadness
 import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
-import XMonad.Layout.Spiral
+--import XMonad.Layout.Spiral
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.Reflect (reflectHoriz)
 --HOOKS
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.Minimize
@@ -52,7 +55,7 @@ myClickJustFocuses = False
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 2
+myBorderWidth   = 3
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -82,7 +85,7 @@ myLayout = avoidStruts $ smartBorders $ spacingRaw True (Border 5 5 5 5) True (B
 
            mkToggle (NBFULL ?? NOBORDERS ?? EOT)
 
-           tiled ||| Mirror tiled ||| spiral (3/5) ||| Grid ||| tabbed shrinkText myTabConfig ||| ThreeCol 1 (3/100) (1/2) ||| ThreeColMid 1 (3/100) (1/2) ||| Full 
+           tiled ||| ResizableTall 1 (3/100) (1/2) [] ||| reflectHoriz (ResizableTall 1 (3/100) (1/2) []) ||| ThreeColMid 1 (3/100) (1/2) ||| Full
 
      where
      -- default tiling algorithm partitions the screen into two panes
@@ -98,23 +101,13 @@ myLayout = avoidStruts $ smartBorders $ spacingRaw True (Border 5 5 5 5) True (B
      delta  = 3/100
 
 ------------------------------------------------------------------------
-myTabConfig = defaultTheme {
-    fontName = "xft:JetBrainsMonoNerd:size=12",
-    activeBorderColor = "#2e8b57",
-    activeTextColor = "#2e8b57",
-    activeColor = "#1a1a1a",
-    inactiveBorderColor = "#1a1a1a",
-    inactiveTextColor = "#c3cdc8",
-    inactiveColor = "#1a1a1a"
-}
-
 
 myScratchPads :: [NamedScratchpad]
 myScratchPads = [
-    NS "scratchpad" "urxvt -name scratchpad" (resource =? "scratchpad")
+    NS "scratchpad" "alacritty --class scratchpad" (resource =? "scratchpad")
         (customFloating $ W.RationalRect (1/4) (1/4) (2/4) (2/4)),
 
-    NS "ncmpcpp" "urxvt -name 'ncmpcpp' -e ncmpcpp" (resource =? "ncmpcpp")
+    NS "ncmpcpp" "alacritty --class ncmpcpp -e ncmpcpp" (resource =? "ncmpcpp")
         (customFloating $ W.RationalRect (1/4) (1/4) (2/4) (2/4)),
 
     NS "pavucontrol" "pavucontrol" (className =? "Pavucontrol")
@@ -191,8 +184,10 @@ myManageHook = composeAll . concat $
 -- Defines a custom handler function for X Events. The function should
 -- return (All True) if the default handler is to be run afterwards. To
 -- combine event hooks use mappend or mconcat from Data.Monoid.
---
+
 myEventHook = serverModeEventHook <+> serverModeEventHookCmd <+> serverModeEventHookF "XMONAD_PRINT" (io . putStrLn)  <+> ewmhDesktopsEventHook <+> fullscreenEventHook <+> docksEventHook <+> minimizeEventHook
+
+
 
 
 
@@ -271,43 +266,43 @@ defaults = def {
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
-    --[ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+    -- [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
     -- close focused window
-    --[ ((modm,               xK_q     ), kill)
+     [ ((modm,               xK_q     ), kill)
 
     -- toggle noboderfull
-    [ ((modm, xK_f), sendMessage $ Toggle NBFULL)
+    , ((modm, xK_f), sendMessage $ Toggle NBFULL)
 
     -- Move focus to the next window
     , ((modm,               xK_Tab   ), windows W.focusDown)
 
     -- Move focus to the next window
-    --, ((modm,               xK_j     ), windows W.focusDown)
+    -- , ((modm,               xK_j     ), windows W.focusDown)
 
     -- Move focus to the previous window
-    --, ((modm,               xK_k     ), windows W.focusUp  )
+    -- , ((modm,               xK_k     ), windows W.focusUp  )
 
     -- Move focus to the master window
-    , ((modm,               xK_m     ), windows W.focusMaster  )
+--    , ((modm,               xK_m     ), windows W.focusMaster  )
 
     -- Swap the focused window and the master window
     , ((modm .|. shiftMask, xK_m     ), windows W.swapMaster)
 
     -- Swap the focused window with the next window
-    --, ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
+     , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
 
     -- Swap the focused window with the previous window
-    --, ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+     , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
 
     -- Shrink the master area
-    --, ((modm,               xK_h     ), sendMessage Shrink)
+     , ((modm,               xK_h     ), sendMessage Shrink)
 
     -- Expand the master area
-    --, ((modm,               xK_l     ), sendMessage Expand)
+     , ((modm,               xK_l     ), sendMessage Expand)
 
     -- Push window back into tiling
-    --, ((modm,               xK_t     ), withFocused $ windows . W.sink)
+     , ((modm,               xK_t     ), withFocused $ windows . W.sink)
 
     --  Jump directly to favorite layout
     , ((modm .|. shiftMask, xK_t), sendMessage $ JumpToLayout "Tabbed Simplest") -- jump directly to the Tabbed layout
@@ -346,10 +341,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
 
     -- Restart xmonad
-    --, ((modm              , xK_g     ), spawn "xmonad --recompile; xmonad --restart")
+    -- , ((modm              , xK_g     ), spawn "xmonad --recompile; xmonad --restart")
 
     -- Run xmessage with a summary of the default keybindings (useful for beginners)
-    --, ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
+     -- , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
     ]
     ++
 

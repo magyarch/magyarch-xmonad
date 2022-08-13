@@ -29,7 +29,7 @@ sleep 5s && notify-send 'Nyomja meg a Super+F1-et a használati utasításért.'
 stalonetray &
 #redshift -l 47.162495:19.503304 -t 6000:3600 -g 0.8 -m randr -v &
 udiskie &
-change_background &
+#change_background &
 
 
 
