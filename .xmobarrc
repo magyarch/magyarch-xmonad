@@ -7,7 +7,7 @@ Config {
    , additionalFonts = ["Joy Pixels:size=11"]
 
    -- háttérszín
-   , bgColor =      "#1a1a1a"
+   , bgColor =      "#000000"
 
    -- elötérszín/Az alapértelmezett betűszínt határozza meg ami jelen esetben fehér színként van meghatározva.
    , fgColor =      "#c3cdc8"
@@ -25,7 +25,7 @@ Config {
    --, border = BottomB
 
    -- keret színe a bar-nak
-   --, borderColor =  "#2e8b57"
+   --, borderColor =  "#947cc3"
 
    -- ikonok helye/elérési út
    , iconRoot = "/home/xeoncpu/.xmonad/xpm/"

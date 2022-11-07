@@ -66,8 +66,8 @@ myModMask   = mod4Mask
 
 -- Border colors for unfocused and focused windows, respectively.
 
-myNormalBorderColor  = "#1a1a1a"
-myFocusedBorderColor = "#2e8b57"
+myNormalBorderColor  = "#000000"
+myFocusedBorderColor = "#947cc3"
 
 ------------------------------------------------------------------------
 

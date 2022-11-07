@@ -3,7 +3,7 @@ transparent false
 dockapp_mode none
 geometry 2x1-0+1
 max_geometry 4x1-325-10
-background "#2e8b57"
+background "#947cc3"
 kludges fix_window_pos
 grow_gravity NE
 icon_gravity NE
