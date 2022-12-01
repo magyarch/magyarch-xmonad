@@ -9,6 +9,7 @@ import System.IO (Handle, hPutStrLn)
 import System.Exit
 import XMonad.Util.NamedScratchpad
 
+
 --LAYOUTS
 import XMonad.Layout.Spacing
 import XMonad.Layout.Fullscreen (fullscreenFull)
@@ -30,6 +31,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageHelpers(doFullFloat, doCenterFloat, isFullscreen, isDialog)
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ServerMode
+import XMonad.Hooks.InsertPosition
 --DATA
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -55,7 +57,7 @@ myClickJustFocuses = False
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 3
+myBorderWidth   = 6
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -153,7 +155,7 @@ myWorkspaces = clickable . (map xmobarEscape) $ ["\61612","\61899","\61947","\61
 -- 'className' and 'resource' are used below.
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
-myManageHook = composeAll . concat $
+myManageHook =  composeAll . concat $   
     [ [isDialog --> doCenterFloat]
     , [isFullscreen --> (doF W.focusDown <+> doFullFloat)]
     , [title =? "calcurse"  --> doFloat]
@@ -217,7 +219,7 @@ myStartupHook = return ()
 myBar = "xmobar"
 
 -- Custom PP, configure it as you like. It determines what is being written to the bar.
-myPP = xmobarPP { ppCurrent = xmobarColor "#2e8b57" "" . wrap "["  "]" }
+myPP = xmobarPP { ppCurrent = xmobarColor "#947cc3" "" . wrap "["  "]" }
 
 -- Key binding to toggle the gap for the bar.
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
@@ -253,7 +255,7 @@ defaults = def {
 
       -- hooks, layouts
         layoutHook         = myLayout,
-        manageHook         = (myManageHook <+> namedScratchpadManageHook myScratchPads),
+        manageHook         = (myManageHook <+> insertPosition Below Newer <+> namedScratchpadManageHook myScratchPads),
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook

@@ -2,7 +2,7 @@
 # -------------------------------
 
 # Main and float terminal
-super + a; Return
+super + Return
     $TERMINAL
 
 # Dmenu2 and rofi(window switcher, application launcher)
