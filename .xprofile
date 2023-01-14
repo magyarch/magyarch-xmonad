@@ -13,7 +13,7 @@ dunst &                 # dunst for notifications
 #mpdupdate &
 #conky &
 nm-applet &
-#picom --config ~/.config/picom.conf &
+~/.config/polybar/launch.sh &
 picom -b --config ~/.config/picom.conf &
 #picom --experimental-backends --inactive-opacity 1.00 --opacity-rule "80:class_g = 'URxvt'" --blur-background-exclude "class_g = 'slop'" -CGfF -o 0.70 -O 0.028 -I 0.028 -t 0 -l 0 -r 2 -D2 -m 1.00   &
 #blueberry-tray &
@@ -28,9 +28,8 @@ sleep 5s && notify-send 'Nyomja meg a Super+F1-et a használati utasításért.'
 #    --transparent true \
 #    --alpha 0 \
 #    --tint 0xc3cdc8 &
-stalonetray &
 #redshift -l 47.162495:19.503304 -t 6000:3600 -g 0.8 -m randr -v &
-udiskie &
+#udiskie &
 #change_background &
 
 
