@@ -10,6 +10,7 @@
   black:      #000000;
   red:        #eb6e67;
   green:      #2e8b56;
+  purple:     #947cc3;
   yellow:     #f8c456;
   blue:       #6eaafb;
   mangenta:   #d886f3;
@@ -70,7 +71,7 @@ element {
 }
 
 element selected {
-  background-color: @green;
+  background-color: @purple;
   text-color: @text;
 }
 
