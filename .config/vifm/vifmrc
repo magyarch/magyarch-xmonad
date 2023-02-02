@@ -25,7 +25,7 @@ set statusline="%10A %10u:%g %8s[%8E] %18d   %{&sort} %= %a free"
 set rulerformat="%l/%S%[ +%x%]"
 set grepprg='rg --line-number %i %a %s'
 " colorscheme gruvbox
-colorscheme Default
+colorscheme dracula
 
 map <C-h> <C-w>h
 map <C-j> <C-w>j

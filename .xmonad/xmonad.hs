@@ -69,7 +69,7 @@ myClickJustFocuses = False
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 3
+myBorderWidth   = 6
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -116,9 +116,9 @@ myTabConfig = def {
     activeBorderColor = "#947cc3",
     activeTextColor = "#947cc3",
     activeColor = "#2f2b26",
-    inactiveBorderColor = "#2f2b26",
+    inactiveBorderColor = "#282a36",
     inactiveTextColor = "#c3cdc8",
-    inactiveColor = "#2f2b26"
+    inactiveColor = "#282a36"
 }
 
 ------------------------------------------------------------------------------
