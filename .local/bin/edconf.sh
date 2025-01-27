@@ -7,15 +7,16 @@
 
 declare options=("alias
 bash
+spectrwm
 profile
 vifm
+Xresources
+barconf
 sxhkd
-xmonad
-xmobarrc
 xprofile
 quit")
 
-choice=$(echo -e "${options[@]}" | dmenu -i -c -g 1 -l 10 -nb '#000000' -sb '#947cc3' -fn 'JetBrains Mono Medium-12' -p 'Edit config files: ')
+choice=$(echo -e "${options[@]}" | dmenu -i -c -g 1 -l 10 -nb '#000000' -nf '#c3cdc8' -sb '#947cc3' -fn 'JetBrains Mono Nerd Font-12' -p 'Edit a config file: ')
 
 case "$choice" in
 	quit)
@@ -27,8 +28,8 @@ case "$choice" in
 	bash)
 		choice="$HOME/.bashrc"
 	;;
-	xmonad)
-		choice="$HOME/.xmonad/xmonad.hs"
+	spectrwm)
+		choice="$HOME/.config/spectrwm/spectrwm.conf"
 	;;
 	profile)
 		choice="$HOME/.profile"
@@ -36,8 +37,11 @@ case "$choice" in
 	vifm)
 		choice="$HOME/.config/vifm/vifmrc"
 	;;
-	xmobarrc)
-		choice="$HOME/.xmobarrc"
+	Xresources)
+		choice="$HOME/.Xresources"
+	;;
+	barconf)
+		choice="$HOME/.config/spectrwm/baraction.sh"
 	;;
 	sxhkd)
 		choice="$HOME/.config/sxhkd/sxhkdrc"

@@ -1,16 +1,24 @@
-#!/bin/sh
-
+#!/usr/bin/env bash
 
 case "$1" in
 
-	scratchpad)
-        entry="urxvt -name scratchpad"
+	scratchpad) 		
+        entry="alacritty -t scratchpad" 		
         ;;
-	FM)
-        entry="urxvt -name FM -e vifm"
+	FM) 		
+        entry="alacritty -t FM -e vifm"		
+        ;;
+    Mail)
+        entry="alacritty -t Mail -e neomutt"
         ;;
     Music)
-        entry="urxvt -name Music -e ncmpcpp"
+        entry="alacritty -t Music -e ncmpcpp"
+        ;;
+    Todo)
+        entry="alacritty -t Todo -e edconf.sh"
+        ;;
+    launchkeys)
+        entry="alacritty -t launchkeys -e spectrwm-bindings.sh"
 esac
 
 xdotool search --onlyvisible --name "$1" windowunmap \

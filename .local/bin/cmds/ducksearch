@@ -3,7 +3,7 @@
 # Without input, will open DuckDuckGo.com.
 # URLs will be directly handed to the browser.
 # Anything else, it search it.
-browser=${BROWSER:-firefox}
+browser=${BROWSER:-brave}
 
 pgrep -x dmenu && exit
 
@@ -18,3 +18,4 @@ else
         $browser "https://duckduckgo.com/?q=$choice&t=ffab&atb=v1-1"
     fi
 fi
+
